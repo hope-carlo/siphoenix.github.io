@@ -1,0 +1,100 @@
+<?php include('server.html') ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="styles.scss">
+        <meta charset="utf-8">
+        <title>Like What You Like!!</title>
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="handy-notify">
+            <span></span>
+          </div>
+          <div class="overlay-2"></div>
+          <div id="hoverdiv"></div>
+          <div class="index_header">
+            <div class="right">
+              <a href="index.html">Home</a>
+              <a href="login.html">Login</a>
+              <a href="register.html">Signup</a>
+            </div>
+          </div>
+        <div class="header_loggedin">
+            <div class="left">
+			  <a href="index.html">Home</a>
+            </div>
+            <div class="right">
+              
+            </div>
+          </div>
+        <div class="notes_wrapper">
+        </div>
+		
+	</head>
+<body>
+
+	<div class="col-md-3"></div>
+	<div class="col-md-6 well">
+        <h3 class="text-primary">Recent Uploaded Videos</h3>
+       	<hr style="border-top:3px solid #ccc;"/>
+		 <h1>No Videos Available Right Now, Videos Available Starting From Wednesday</h1>
+		<?php
+			require 'conn.html';
+			
+			$query = mysqli_query($conn, "SELECT * FROM `video` ORDER BY `video_id` ASC") or die(mysqli_error());
+			while($fetch = mysqli_fetch_array($query)){
+		?>
+		<div class="col-md-12">
+			<div class="col-md-4" style="word-wrap:break-word;">
+                <br />
+              
+               
+
+				<h4>Video Name</h4>
+                <h5 class="text-primary"><?php echo $fetch['location']?></h5>
+				<h5 class="text-primary"><?php echo $fetch['location']?></h5>
+                
+			</div>
+			
+			<div class="col-md-8">
+			<span><a href="https://pornmzansi.co.za/@amanda" data-load="?link1=timeline&amp;id=amanda" tabindex="-1">Amanda YoungQueen <i class="fa fa-check-circle fa-fw verified"></i></a></span>
+				<video width="100%" height="100%" controls>
+					<source src="<?php echo $fetch['location']?>">
+				</video>
+				<div class="vp_vid_bottm"><span><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg> 3K Views</span> <span class="vp_vid_time">4 days ago</span></div>
+				<span class="view_more_link" title="Explore more"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg></span>
+				
+			</div>
+			<br style="clear:both;"/>
+			<hr style="border-top:1px groovy #000;"/>
+		</div>
+		<?php
+			}
+		?>
+	</div>
+	<div class="modal fade" id="form_modal" aria-hidden="true">
+		<div class="modal-dialog">
+			<form action="save_video.html" method="POST" enctype="multipart/form-data">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="col-md-3"></div>
+						<div class="col-md-6">
+							<div class="form-group">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+</body>
+</html>

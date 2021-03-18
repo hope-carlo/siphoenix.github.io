@@ -1,0 +1,84 @@
+<?php
+class Reactions {
+  // (A) CONSTRUCTOR - CONNECT TO DATABASE
+  private $pdo;
+  private $stmt;
+  function __construct () {
+    try {
+      $this->pdo = new PDO(
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET,
+        DB_USER, DB_PASSWORD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+      );
+    } catch (Exception $ex) { die($ex->getMessage()); }
+  }
+
+  // (B) DESTRUCTOR - CLOSE DATABASE CONNECTION
+  function __destruct () {
+    $this->pdo = null;
+    $this->stmt = null;
+  }
+
+  // (C) GET TOTAL REACTIONS
+  function get ($id) {
+    // (C1) FORMULATE SQL QUERY
+    $sql = "SELECT `id`, `reaction`, COUNT(`reaction`) `total` FROM `users` WHERE `id` IN (?";
+    $sql .= str_repeat(",?", count($id)-1);
+    $sql .= ") GROUP BY `id`, `reaction`";
+
+    // (C2) RUN QUERY
+    $reactions = [];
+    $this->stmt = $this->pdo->prepare($sql);
+    $this->stmt->execute($id);
+    while ($r = $this->stmt->fetch(PDO::FETCH_NAMED)) {
+      // $reactions[ID][REACTION] = TOTAL
+      $reactions[$r['id']][$r['reaction']] = $r['total'];
+    }
+    return $reactions;
+  }
+
+  // (D) GET REACTIONS SET BY SPECIFIED USER
+  function getUser ($id, $uid) {
+    // (D1) FORMULATE SQL QUERY
+    $sql = "SELECT * FROM `users` WHERE `user_id`=? AND `id` IN (?";
+    $sql .= str_repeat(",?", count($id)-1) . ")"; 
+
+    // (D2) GET USER REACTIONS
+    $reactions = [];
+    array_unshift($id, $uid);
+    $this->stmt = $this->pdo->prepare($sql);
+    $this->stmt->execute($id);
+    while ($r = $this->stmt->fetch(PDO::FETCH_NAMED)) {
+      // $reactions[ID] = REACTION
+      $reactions[$r['id']] = $r['reaction'];
+    }
+    return $reactions;
+  }
+
+  // (E) SAVE REACTION
+  function save ($id, $uid, $react) {
+    $this->stmt = $this->pdo->prepare(
+      "REPLACE INTO `reactions` (`id`, `user_id`, `reaction`) VALUES (?,?,?)"
+    );
+    $this->stmt->execute([$id, $uid, $react]);
+    return true;
+  }
+
+  // (F) DELETE REACTION
+  function del ($id, $uid) {
+    $this->stmt = $this->pdo->prepare(
+      "DELETE FROM `reactions` WHERE `id`=? AND `user_id`=?"
+    );
+    $this->stmt->execute([$id, $uid]);
+    return true;
+  }
+}
+
+// (G) DATABASE SETTINGS - CHANGE TO YOUR OWN!
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'phoenix');
+define('DB_CHARSET', 'utf8');
+define('DB_USER', 'root');
+define('DB_PASSWORD', '');
+
+// (H) CREATE NEW CONTENT OBJECT
+$REACT = new Reactions();

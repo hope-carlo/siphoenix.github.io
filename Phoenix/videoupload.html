@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+		<style type=text/css>
+		body{
+			background-color:#f8f8f8;
+		}
+		</style>
+	</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<a href="playgame.html" class="navbar-brand">Videos Here!!</a>
+		</div>
+	</nav>
+	<div class="col-md-3"></div>
+	<div class="col-md-6 well">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#form_modal"><span class="glyphicon glyphicon-plus"></span> Add Video</button><br>
+			<br>
+				<br>
+					<br>
+		<h1>Short Request For You All Champs</h1>
+		<hr style="border-top:3px solid #ccc;"/>
+		<h3>Since This Is A Local Production, And almost all of us dont have credit cards and by that we can't provide
+		an online payment script, so we thought we should collect the mulah (money) every Monday at Mogomotsi Secondary 
+		School, during break. </h3>
+		<div id="imag">
+<img src="figure.png" height="590em"; width="690em">  
+</div>
+<h3>That guy you're seing, he's the mulah collector</h3>
+<br>
+<hr style="border-top:3px solid #ccc;"/>
+<h1><b>Add Your Video And See You On Monday-Tuesday</b></h1>
+<hr style="border-top:3px solid #ccc;"/>
+	</div>
+	<div class="modal fade" id="form_modal" aria-hidden="true">
+		<div class="modal-dialog">
+			<form action="save_video.html" method="POST" enctype="multipart/form-data">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="col-md-3"></div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Video File</label>
+								<input type="file" name="video" class="form-control-file"/>
+							</div>
+						</div>
+					</div>
+					<div style="clear:both;"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
+						<button name="save" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<?php
+// (A) USER SESSION - FIXED USER ID TO 1 FOR THIS DEMO
+session_start();
+$_SESSION['user'] = 1;
+
+// (B) DUMMY POSTS 
+$posts = [
+  "900" => "Tsholofelo",
+];
+$pid = [];
+foreach ($posts as $id=>$video) { $pid[] = $id; }
+
+// (C) GET REACTIONS
+require "2a-reactions.html";
+$react = $REACT->get($pid);
+$ureact = $REACT->getUser($pid, $_SESSION['user']);
+ 
+// (D) OUTPUT HTML ?>
+<!-- (D1) CSS + JS -->
+<!-- https://cdnjs.com/libraries/font-awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+<link rel="stylesheet" href="3b-posts.css"/>
+<script src="3c-posts.js"></script>
+ 
+<!-- (D2) POSTS LIST -->
+<div id="demo"><?php
+  foreach ($posts as $id=>$video) { 
+  $likes = isset($react[$id][1]) ? $react[$id][1] : 0 ;
+  $dislikes = isset($react[$id][0]) ? $react[$id][0] : 0 ;
+  $reuser = isset($ureact[$id]) ? $ureact[$id] : "" ; ?>
+  <div class="prow" data-react="<?=$reuser?>" id="prow<?=$id?>">
+    <div class="ptxt"><?=$video?></div>
+    <div class="plike" onclick="react(<?=$id?>, 1)">
+      <i class="fa fa-thumbs-up"></i>
+      <span class="countlike"><?=$likes?></span>
+    </div>
+    <div class="pdislike" onclick="react(<?=$id?>, 0)">
+      <i class="fa fa-thumbs-down"></i>
+      <span class="countdislike"><?=$dislikes?></span>
+    </div>
+  </div>
+  <?php } ?>
+</div>

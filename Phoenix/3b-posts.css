@@ -1,0 +1,20 @@
+#demo {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.prow {
+  display: flex;
+  background: #fafafa;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.ptxt { width: 100%; }
+.plike, .pdislike {
+  width: 80px; 
+  cursor: pointer;
+  color: #bbb;
+}
+.prow[data-react="0"] .pdislike { color: #f12727; }
+.prow[data-react="1"] .plike { color: #0cb30c; }
+html, body { font-family: arial, sans-serif; }
